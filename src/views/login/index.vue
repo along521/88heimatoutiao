@@ -85,10 +85,27 @@ export default {
     //   登陆手动校验
     login () {
     //   console.log(this.$refs.formObj)
-      this.$refs.formObj.validate(function (isOK) {
+
+      this.$refs.formObj.validate((isOK) => {
         if (isOK) {
           // isOK 如果为true 继续下一步 调用接口登陆
-        } else {}
+
+          this.$axios({
+            url: '/authorizations',
+            data: this.loginForm,
+            method: 'post'
+          }).then(result => {
+            console.log(result.data)
+            window.localStorage.setItem('user-token', result.data.data.token)
+
+            this.$router.push('/home')
+          }).catch(() => {
+            this.$message({
+              type: 'warning',
+              message: '手机号或者验证码错误'
+            })
+          })
+        }
       })
     }
   }
