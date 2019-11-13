@@ -7,7 +7,7 @@
             <img src="../../assets/img/logo_index.png" alt="">
         </div>
         <!-- 表单                -----------------            验证---------- -->
-        <el-form style="margin-top:30px" :model='loginForm' :rules='loginRules'>
+        <el-form  ref="formObj" style="margin-top:30px" :model='loginForm' :rules='loginRules'>
             <el-form-item prop="mobile">
                 <!-- 手机号 -->
                 <el-input v-model="loginForm.mobile" placeholder="请输入您的手机号"></el-input>
@@ -25,16 +25,19 @@
 
             </el-form-item>
             <el-form-item>
-               <el-button style='width:100%' type="primary">登陆</el-button>
+                <!-- 登陆 -->
+               <el-button style='width:100%' type="primary" @click='login'>登陆</el-button>
 
             </el-form-item>
         </el-form>
       </el-card>
+      <div ref="div"></div>
   </div>
 
 </template>
 
 <script>
+
 export default {
   data () {
     return {
@@ -76,6 +79,17 @@ export default {
           } }
         ]
       }
+    }
+  },
+  methods: {
+    //   登陆手动校验
+    login () {
+    //   console.log(this.$refs.formObj)
+      this.$refs.formObj.validate(function (isOK) {
+        if (isOK) {
+          // isOK 如果为true 继续下一步 调用接口登陆
+        } else {}
+      })
     }
   }
 }
